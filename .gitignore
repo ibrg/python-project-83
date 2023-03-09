@@ -1,0 +1,13 @@
+*.pyc
+*.lock
+setup.cfg
+*coverage*
+
+# Folders
+.venv/
+.vscode/
+*__pycache__/*
+.pytest_cache/*
+dist/
+.venv/
+.idea/
