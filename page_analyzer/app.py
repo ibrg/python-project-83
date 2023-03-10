@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, render_template
 
 
 app = Flask(__name__)
@@ -6,4 +6,8 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return jsonify({"Choo Choo": "Welcome to your Flask app 🚅"})
+    title = 'Welcome in Page Analyzer'
+    return render_template(
+        'index.html',
+        title=title
+    )

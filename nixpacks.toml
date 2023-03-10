@@ -1,0 +1,3 @@
+# nixpacks.toml
+[phases.install]
+nixPkgs = ['pip install --upgrade pip']
