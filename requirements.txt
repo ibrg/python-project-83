@@ -8,3 +8,4 @@ MarkupSafe==2.1.2
 python-dotenv==1.0.0
 Werkzeug==2.2.3
 poetry>=1.2.2
+python>=3.10
