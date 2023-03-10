@@ -6,8 +6,5 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    title = 'Welcome in Page Analyzer'
-    return render_template(
-        'index.html',
-        title=title
-    )
+    title = 'Анализатор страниц'
+    return render_template('index.html', title=title)
