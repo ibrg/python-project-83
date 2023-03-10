@@ -1,0 +1,20 @@
+name: dev-check
+
+on:  push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.11.2'
+      - name: install dependencies
+        run: |
+          pip3 install poetry flake8
+          pip3 install pytest
+          make install
+      - name: Run linter
+        run: make lint
