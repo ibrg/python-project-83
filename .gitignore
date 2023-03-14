@@ -2,6 +2,7 @@
 *.lock
 setup.cfg
 *coverage*
+.env
 
 # Folders
 .venv/
