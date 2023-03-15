@@ -21,34 +21,16 @@ def index():
 
 @app.get('/urls')
 def urls_list():
-    db.execute('SELECT * FROM urls ORDER BY created_at DESC')
+    query = '''
+        SELECT urls.id, urls.name, url_checks.created_at
+        FROM url_checks JOIN urls ON url_id = urls.id
+        ORDER BY urls.id DESC;
+    '''
+    db.execute(query)
     urls_list = cur.fetchall()
     return render_template(
         'urls/urls_list.html',
         urls_list=urls_list)
-
-
-@app.route('/urls/<id>')
-def urls_detail(id):
-    query = f"SELECT * FROM urls WHERE id = {id}"
-    db.execute(query)
-    url = cur.fetchone()
-    messages = get_flashed_messages(with_categories=True)
-    return render_template(
-        'urls/urls_detail.html',
-        url=url,
-        messages=messages
-        )
-
-
-# @app.get('/urls')
-# def urls_get():
-
-#     errors = {}
-#     return render_template(
-#         'urls/urls.html',
-#         form=form,
-#         errors=errors)
 
 
 @app.post('/urls')
@@ -67,3 +49,29 @@ def urls():
     url_id = cur.fetchone()[0]
     flash('Страница успешно добавлена', 'success')
     return redirect(url_for('urls_detail', id=url_id))
+
+
+@app.route('/urls/<id>')
+def urls_detail(id):
+    query = f"SELECT * FROM urls WHERE id = {id}"
+    db.execute(query)
+    url = cur.fetchone()
+
+    query = f"SELECT * FROM url_checks WHERE url_id = {id}" \
+            f"ORDER BY created_at DESC"
+    db.execute(query)
+    url_checks = cur.fetchall()
+    messages = get_flashed_messages(with_categories=True)
+    return render_template(
+        'urls/urls_detail.html',
+        url=url,
+        url_checks=url_checks,
+        messages=messages)
+
+
+@app.post('/urls/<id>/checks')
+def urls_check(id):
+    query = f"INSERT INTO url_checks (url_id) VALUES ({id})"
+    db.execute(query)
+    flash('Страница успешно проверена', 'success')
+    return redirect(url_for('urls_detail', id=id))
