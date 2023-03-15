@@ -22,7 +22,11 @@
                         {{ link[1] }}
                     </a>
                 </td>
-                <td>{{ link[2].strftime('%Y-%m-%d') }}</td>
+                <td>
+                    {% if link[2] %} 
+                        {{ link[2].strftime('%Y-%m-%d') }}
+                    {% endif %}
+                </td>
                 <td></td>
             </tr>
             {% endfor %}

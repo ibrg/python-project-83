@@ -9,5 +9,5 @@ install:
 	poetry install
 
 lint: 
-	python -m flake8 page_analyzer
+	poetry run python -m flake8 page_analyzer
 

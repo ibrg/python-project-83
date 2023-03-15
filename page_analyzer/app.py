@@ -23,7 +23,7 @@ def index():
 def urls_list():
     query = '''
         SELECT urls.id, urls.name, url_checks.created_at
-        FROM url_checks JOIN urls ON url_id = urls.id
+        FROM urls LEFT JOIN url_checks ON urls.id = url_id
         ORDER BY urls.id DESC;
     '''
     db.execute(query)
