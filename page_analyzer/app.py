@@ -42,7 +42,7 @@ def urls():
     id = cur.fetchone()[0]
     if id:
         flash(('info', 'Страница уже существует'))
-        return redirect(url_for('urls_detail', id = id))
+        return redirect(url_for('urls_detail', id=id))
     if errors:
         return render_template(
             'urls/urls.html',
