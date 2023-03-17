@@ -1,5 +1,5 @@
 import os
-
+from psycopg2.extras import RealDictCursor
 import psycopg2
 from dotenv import load_dotenv
 
@@ -12,7 +12,7 @@ class DB:
     def __init__(self, url=''):
         self.url = url
         self.conn = psycopg2.connect(DATABASE_URL)
-        self.cur = self.conn.cursor()
+        self.cur = self.conn.cursor(cursor_factory=RealDictCursor)
 
     def connect(self):
         return self.cur

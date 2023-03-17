@@ -9,22 +9,22 @@
         <tbody>
             <tr>
                 <td>ID</td>
-                <td>{{ url[0] }}</td>
+                <td>{{ url.id }}</td>
             </tr>
             <tr>
                 <td>Имя</td>
-                <td>{{ url[1] }}</td>
+                <td>{{ url.name }}</td>
             </tr>
             <tr>
                 <td>Дата создания</td>
-                <td>{{ url[2].strftime("%Y-%m-%d") }}</td>
+                <td>{{ url.created_at.strftime("%Y-%m-%d") }}</td>
             </tr>
         </tbody>
     </table>
 </div>
 
 <h2 class="mt-5 mb-3">Проверки</h2>
-<form method="post" action="{{ url_for('urls_check', id=url[0]) }}">
+<form method="post" action="{{ url_for('urls_check', id=url.id) }}">
     <input type="submit" class="btn btn-primary" value="Запустить проверку">
 </form>
 
@@ -42,12 +42,12 @@
 
             {% for check in url_checks %}
             <tr>
-                <td>{% if check[0] %} {{ check[0] }} {% endif %}</td>
-                <td>{% if check[2] %} {{ check[2] }} {% endif %}</td>
-                <td>{% if check[3] %} {{ check[3] }} {% endif %}</td>
-                <td>{% if check[4] %} {{ check[4] }} {% endif %}</td>
-                <td>{% if check[5] %} {{ check[5] }} {% endif %}</td>
-                <td>{{ check[6].strftime("%Y-%m-%d") }}</td>
+                <td>{% if check.id %} {{ check.id }} {% endif %}</td>
+                <td>{% if check.status_code %} {{ check.status_code }} {% endif %}</td>
+                <td>{% if check.h1 %} {{ check.h1 }} {% endif %}</td>
+                <td>{% if check.title %} {{ check.title }} {% endif %}</td>
+                <td>{% if check.description %} {{ check.description }} {% endif %}</td>
+                <td>{{ check.created_at.strftime("%Y-%m-%d") }}</td>
             </tr>
             {% endfor %}
 

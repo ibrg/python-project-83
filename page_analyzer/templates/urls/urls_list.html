@@ -16,18 +16,22 @@
 
             {% for link in urls_list %}
             <tr>
-                <td>{{ link[0] }}</td>
+                <td>{{ link.id }}</td>
                 <td>
-                    <a href="/urls/{{ link[0] }}">
-                        {{ link[1] }}
+                    <a href="/urls/{{ link.id }}">
+                        {{ link.name }}
                     </a>
                 </td>
                 <td>
-                    {% if link[2] %} 
-                        {{ link[2].strftime('%Y-%m-%d') }}
+                    {% if link.created_at %} 
+                        {{ link.created_at.strftime('%Y-%m-%d') }}
                     {% endif %}
                 </td>
-                <td></td>
+                <td>
+                    {% if link.status_code %}
+                        {{ link.status_code}}
+                    {% endif %}
+                </td>
             </tr>
             {% endfor %}
         </tbody>
