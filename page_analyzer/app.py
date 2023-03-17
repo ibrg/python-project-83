@@ -37,6 +37,12 @@ def urls_list():
 def urls():
     url = request.form.get('url', '')
     errors = valid_url(url)
+    query = f"Select id From urls where name = '{url}'"
+    db.execute(query)
+    id = cur.fetchone()[0]
+    if id:
+        flash(('info', 'Страница уже существует'))
+        return redirect(url_for('urls_detail', id = id))
     if errors:
         return render_template(
             'urls/urls.html',
