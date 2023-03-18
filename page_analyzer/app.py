@@ -5,7 +5,7 @@ from flask import (Flask, flash, get_flashed_messages, redirect,
 
 from .db import DB
 from .validator import valid_url
-from .utils import get_correct_url
+from .utils import get_correct_url, check_seo, format_text
 
 
 app = Flask(__name__)
@@ -87,17 +87,25 @@ def urls_check(id):
     query_url = f"SELECT name FROM urls WHERE id = {id}"
     db.execute(query_url)
     link = cur.fetchone()['name']
-    status_code = None
-
+    print('URL: --- ', link)
+    resourse = None
     try:
-        r = requests.get(link, timeout=5)
-        status_code = r.status_code
+        resourse = requests.get(link, timeout=5)
+
     except requests.exceptions.ConnectionError:
         flash('Произошла ошибка при проверке', 'error')
         return redirect(url_for('urls_detail', id=id))
 
-    query = f"INSERT INTO url_checks (url_id, status_code)"\
-            f" VALUES ({id}, {status_code})"
+    status_code, h1, title, meta_desc = check_seo(resourse)
+
+    query = " \
+        INSERT INTO url_checks (url_id, status_code, h1, title, description)\
+         VALUES ({id}, {code}, '{h1}', '{title}', '{meta_desc}')".format(
+            id=id,
+            code=status_code,
+            h1=format_text(h1),
+            title=format_text(title),
+            meta_desc=format_text(meta_desc))
     db.execute(query)
     flash('Страница успешно проверена', 'success')
     return redirect(url_for('urls_detail', id=id))
