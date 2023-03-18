@@ -1,12 +1,12 @@
 import os
+
 import requests
 from flask import (Flask, flash, get_flashed_messages, redirect,
                    render_template, request, url_for)
 
 from .db import DB
+from .utils import check_seo, format_text, get_correct_url
 from .validator import valid_url
-from .utils import get_correct_url, check_seo, format_text
-
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
@@ -17,7 +17,6 @@ cur = db.connect()
 
 @app.errorhandler(404)
 def page_not_found(e):
-    # note that we set the 404 status explicitly
     return render_template('404.html'), 404
 
 

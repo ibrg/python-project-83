@@ -1,7 +1,8 @@
 import os
-from psycopg2.extras import RealDictCursor
+
 import psycopg2
 from dotenv import load_dotenv
+from psycopg2.extras import RealDictCursor
 
 load_dotenv()
 DATABASE_URL = os.getenv('DATABASE_URL')
