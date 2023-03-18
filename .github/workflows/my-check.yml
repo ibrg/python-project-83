@@ -1,4 +1,4 @@
-name: dev-check
+name: check lint
 
 on:  push
 
