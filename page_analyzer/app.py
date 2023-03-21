@@ -19,6 +19,9 @@ cur = db.connect()
 def page_not_found(e):
     return render_template('404.html'), 404
 
+@app.errorhandler(500)
+def page_not_found(e):
+    return render_template('500.html'), 500
 
 @app.route('/')
 def index():
@@ -99,6 +102,7 @@ def urls_check(id):
 
     except requests.exceptions.ConnectionError:
         flash('Произошла ошибка при проверке', 'error')
+    finally:
         return redirect(url_for('urls_detail', id=id))
 
     status_code, h1, title, meta_desc = check_seo(resourse)
