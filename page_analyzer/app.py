@@ -101,20 +101,18 @@ def urls_check(id):
     resourse = None
     try:
         resourse = requests.get(link, timeout=5,  allow_redirects=True)
-    except requests.exceptions.ConnectionError:
-        flash('Произошла ошибка при проверке', 'error')
-        return redirect(url_for('urls_detail', id=id))
+        status_code, h1, title, meta_desc = check_seo(resourse)
 
-    status_code, h1, title, meta_desc = check_seo(resourse)
-
-    query = " \
+        query = " \
         INSERT INTO url_checks (url_id, status_code, h1, title, description)\
-         VALUES ({id}, {code}, '{h1}', '{title}', '{meta_desc}')".format(
-            id=id,
-            code=status_code,
-            h1=format_text(h1),
-            title=format_text(title),
-            meta_desc=format_text(meta_desc))
-    db.execute(query)
-    flash('Страница успешно проверена', 'success')
+            VALUES ({id}, {code}, '{h1}', '{title}', '{meta_desc}')".format(
+                id=id,
+                code=status_code,
+                h1=format_text(h1),
+                title=format_text(title),
+                meta_desc=format_text(meta_desc))
+        db.execute(query)
+        flash('Страница успешно проверена', 'success')
+    except requests.RequestException:
+        flash('Произошла ошибка при проверке', 'error')
     return redirect(url_for('urls_detail', id=id))
