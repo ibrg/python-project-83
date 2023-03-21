@@ -100,7 +100,7 @@ def urls_check(id):
     print('URL: --- ', link)
     resourse = None
     try:
-        resourse = requests.get(link, timeout=5,  allow_redirects=True)
+        resourse = requests.get(link, timeout=5, allow_redirects=True)
         status_code, h1, title, meta_desc = check_seo(resourse)
 
         query = " \
