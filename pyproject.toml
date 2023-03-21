@@ -3,6 +3,7 @@ name = "hexlet-code"
 version = "0.1.0"
 description = "\"Hexlet`s python project 'Pages analizator'\""
 authors = ["ibrg <romanbezh@gmail.com>"]
+packages = [{include = "page_analyzer"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
