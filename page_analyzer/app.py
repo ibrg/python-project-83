@@ -100,8 +100,9 @@ def urls_check(id):
     print('URL: --- ', link)
     resourse = None
     try:
-        resourse = requests.get(link, timeout=5)
-    except requests.exceptions.RequestException:
+        resourse = requests.get(link, timeout=5,  allow_redirects=True)
+    except requests.exceptions.ConnectionError:
+        flash('Произошла ошибка при проверке', 'error')
         return redirect(url_for('urls_detail', id=id))
 
     status_code, h1, title, meta_desc = check_seo(resourse)
