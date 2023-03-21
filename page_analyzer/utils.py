@@ -1,3 +1,4 @@
+import requests
 from bs4 import BeautifulSoup as bs
 
 
@@ -11,6 +12,9 @@ def check_seo(resourse):
     content = resourse.text
     html = bs(content, 'html5lib')
     status_code = resourse.status_code
+    if status_code != 200:
+        raise requests.RequestException
+
     h1 = html.find('h1').text if html.find('h1') else ''
     title = html.find('title').text if html.find('title') else ''
     meta_desc = html.find("meta", {"name": "description"})['content'] \
